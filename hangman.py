@@ -30,47 +30,57 @@ while(tries > 0):
 	print " "
 	guess = raw_input("Guess: ")
 
-	#check whether new letter was guessed
-	guessed = False
-	for i in range (0, 25):
-		if guess == guessedLetters[i]:
-			guessed = True
-	if guessed == True:
-		tries = tries - 1
-		print "This letter was already guessed"
+	#check whether guess is a proper input (single alphabet)
+	if((guess.isalpha() != True) or (len(guess) != 1)):
+		tries = tries - 1 
+		print "Improper Guess: make sure that your guess is one letter alphabet :("
 	else:
-		guessedLetters[countGuess] = guess
-		countGuess = countGuess + 1
+		guess = guess.lower()
 
-		correct = False
-		for i in range(0, count-1):
-			if guess == myWord[i]:
-				answer[i] = guess
-				correctGuess = correctGuess + 1		
-				correct = True
-		#check whether correct letter was guessed 
-		if correct == True:
-			print "Correct Guess :)"
-			print " "
-		else: 
+		#check whether new letter was guessed
+		guessed = False
+		for i in range (0, 25):
+			if guess == guessedLetters[i]:
+				guessed = True
+		if guessed == True:
 			tries = tries - 1
-			print "Incorrect Guess :("
-			print " "
-		#check whether correct word was guessed
-		if correctGuess == count: 
-			tries = -1
-
+			print "This letter was already guessed :("
+		else:
+			guessedLetters[countGuess] = guess
+			countGuess = countGuess + 1
+	
+			correct = False
+			for i in range(0, count):
+				if guess == myWord[i]:
+					answer[i] = guess
+					correctGuess = correctGuess + 1		
+					correct = True
+			#check whether correct letter was guessed 
+			if correct == True:
+				print "Correct Guess :)"
+				print " "
+			else: 
+				tries = tries - 1
+				print "Incorrect Guess :("
+				print " "
+			#check whether correct word was guessed
+			if correctGuess == count: 
+				tries = -1
+	
 
 #print results
 if tries == 0:
 	print " "
 	print " "
-	print "YOU LOST :( THE ANSWER WAS %s" % ''.join(myWord)
+	print "YOU LOST :( The answer was %s" % ''.join(myWord)
+	print " "
+	print " "
 elif tries == -1:
 	print " "
 	print " "
 	print "CONGRATULATIONS :) YOU GUESSED THE CORRECT ANSWER"
-
+	print " "
+	print " "
 
 
 
