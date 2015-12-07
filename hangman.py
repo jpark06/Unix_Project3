@@ -1,11 +1,14 @@
 #ECE2524 Project3
 #Hangman Game
 #Jisu Park
+#December 2015
+
 
 #instruction
 print " "
 print "Hangman Game!!"
 print "Guess the correct word in 10 tries"
+
 
 #variables
 tries = 10
@@ -17,6 +20,8 @@ myWord = list(words[randNum])
 count = len(myWord)
 correctGuess = 0
 answer = ['_'] * count
+guessedLetters = [' '] * 26
+countGuess = 0
 
 while(tries > 0):
 	print " "
@@ -25,29 +30,42 @@ while(tries > 0):
 	print " "
 	guess = raw_input("Guess: ")
 
-	correct = False
-	for i in range(0, count-1):
-		if guess == myWord[i]:
-			answer[i] = guess
-			correctGuess = correctGuess + 1		
-			correct = True
-	#check whether correct letter was guessed 
-	if correct == True:
-		print "Correct Guess :)"
-		print " "
-	else: 
+	#check whether new letter was guessed
+	guessed = False
+	for i in range (0, 25):
+		if guess == guessedLetters[i]:
+			guessed = True
+	if guessed == True:
 		tries = tries - 1
-		print "Incorrect Guess :("
-		print " "
-	#check whether correct word was guessed
-	if correctGuess == count: 
-		tries = -1
+		print "This letter was already guessed"
+	else:
+		guessedLetters[countGuess] = guess
+		countGuess = countGuess + 1
+
+		correct = False
+		for i in range(0, count-1):
+			if guess == myWord[i]:
+				answer[i] = guess
+				correctGuess = correctGuess + 1		
+				correct = True
+		#check whether correct letter was guessed 
+		if correct == True:
+			print "Correct Guess :)"
+			print " "
+		else: 
+			tries = tries - 1
+			print "Incorrect Guess :("
+			print " "
+		#check whether correct word was guessed
+		if correctGuess == count: 
+			tries = -1
+
 
 #print results
 if tries == 0:
 	print " "
 	print " "
-	print "YOU LOST :( THE ANSWER WAS %s" % myWord
+	print "YOU LOST :( THE ANSWER WAS %s" % ''.join(myWord)
 elif tries == -1:
 	print " "
 	print " "
